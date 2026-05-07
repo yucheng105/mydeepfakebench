@@ -196,10 +196,14 @@ class DeepfakeAbstractBaseDataset(data.Dataset):
             ValueError: If the loaded image is None.
         """
         size = self.config['resolution']
-        assert os.path.exists(file_path), f"{file_path} does not exist"
-        img = cv2.imread(file_path)
+        rgb_dir = self.config.get('rgb_dir', './datasets/rgb')
+        normalized_path = file_path.replace('\\', os.sep).replace('/', os.sep)
+        if not os.path.isabs(normalized_path):
+            normalized_path = os.path.join(rgb_dir, normalized_path)
+        assert os.path.exists(normalized_path), f"{normalized_path} does not exist"
+        img = cv2.imread(normalized_path)
         if img is None: 
-            raise ValueError('Loaded image is None: {}'.format(file_path))
+            raise ValueError('Loaded image is None: {}'.format(normalized_path))
 
         img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         img = cv2.resize(img, (size, size), interpolation=cv2.INTER_CUBIC)
@@ -327,9 +331,22 @@ class DeepfakeAbstractBaseDataset(data.Dataset):
         try:
             image = self.load_rgb(image_path)
         except Exception as e:
-            # Skip this image and return the first one
             print(f"Error loading image at index {index}: {e}")
-            return self.__getitem__(0)
+            for fallback_index in range(len(self.data_dict['image'])):
+                if fallback_index == index:
+                    continue
+                try:
+                    fallback_image = self.load_rgb(self.data_dict['image'][fallback_index])
+                    image = fallback_image
+                    label = self.data_dict['label'][fallback_index]
+                    image_path = self.data_dict['image'][fallback_index]
+                    mask_path = image_path.replace('frames', 'masks')
+                    landmark_path = image_path.replace('frames', 'landmarks').replace('.png', '.npy')
+                    break
+                except Exception:
+                    continue
+            else:
+                raise RuntimeError(f"Unable to load any valid image after index {index}: {e}") from e
         image = np.array(image)  # Convert to numpy array for data augmentation
         
         # Load mask and landmark (if needed)

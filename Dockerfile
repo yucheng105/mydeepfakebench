@@ -10,6 +10,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt update && \
     build-essential  \
     ca-certificates  \
     libfreetype6-dev  \
+    libgl1  \
     libtool  \
     pkg-config  \
     python-dev  \
@@ -18,6 +19,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt update && \
     python3-pip \
     cmake \
     libgl1-mesa-glx \
+    libglib2.0-0 \
     libsm6 \
     libxext6 \
     libxrender-dev \
@@ -39,6 +41,7 @@ RUN python3.7 -m pip install --no-cache-dir --upgrade pip setuptools wheel certi
     && \
     python3.7 -m pip --no-cache-dir install dlib==19.24.0\
     imageio==2.9.0\
+    albumentations==1.1.0\
     imgaug==0.4.0\
     scipy==1.7.3\
     seaborn==0.11.2\

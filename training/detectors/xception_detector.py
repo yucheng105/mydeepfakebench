@@ -64,14 +64,18 @@ class XceptionDetector(AbstractDetector):
         backbone_class = BACKBONE[config['backbone_name']]
         model_config = config['backbone_config']
         backbone = backbone_class(model_config)
-        # if donot load the pretrained weights, fail to get good results
-        state_dict = torch.load(config['pretrained'])
-        for name, weights in state_dict.items():
-            if 'pointwise' in name:
-                state_dict[name] = weights.unsqueeze(-1).unsqueeze(-1)
-        state_dict = {k:v for k, v in state_dict.items() if 'fc' not in k}
-        backbone.load_state_dict(state_dict, False)
-        logger.info('Load pretrained model successfully!')
+        pretrained_path = config.get('pretrained')
+        if pretrained_path and os.path.exists(pretrained_path):
+            # Load the optional backbone checkpoint only when it is available locally.
+            state_dict = torch.load(pretrained_path)
+            for name, weights in state_dict.items():
+                if 'pointwise' in name:
+                    state_dict[name] = weights.unsqueeze(-1).unsqueeze(-1)
+            state_dict = {k: v for k, v in state_dict.items() if 'fc' not in k}
+            backbone.load_state_dict(state_dict, False)
+            logger.info('Load pretrained model successfully!')
+        else:
+            logger.warning('Skip loading pretrained backbone because %s is missing.', pretrained_path)
         return backbone
     
     def build_loss(self, config):

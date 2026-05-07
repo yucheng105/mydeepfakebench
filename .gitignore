@@ -32,6 +32,9 @@ logs/
 *.tar.gz
 *.tgz
 
+# Local dataset content
+datasets/rgb/
+
 # Jupyter
 .ipynb_checkpoints/
 

@@ -36,7 +36,7 @@ python training/test.py --detector_path ./training/config/detector/xception.yaml
 
 # Training
 ```bash
-python training/train.py --detector_path ./training/config/detector/xception.yaml --train_dataset "FaceForensics++" --test_dataset "Celeb-DF-v2"
+python training/train.py --detector_path ./training/config/detector/facexray.yaml --train_dataset "FaceForensics++" --test_dataset "FaceForensics++"
 ```
 
 ## Notes to Myself
