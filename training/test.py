@@ -143,7 +143,7 @@ def inference(model, data_dict):
 
 def main():
     # parse options and load config
-    with open(args.detector_path, 'r') as f:
+    with open(args.detector_path, 'r', encoding='utf-8') as f:
         config = yaml.safe_load(f)
 
     weights_path = None

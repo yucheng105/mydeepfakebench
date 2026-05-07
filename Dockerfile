@@ -17,6 +17,10 @@ RUN DEBIAN_FRONTEND=noninteractive apt update && \
     python3.7-dev  \
     python3-pip \
     cmake \
+    libgl1-mesa-glx \
+    libsm6 \
+    libxext6 \
+    libxrender-dev \
 	&& \
     rm -rf /var/lib/apt/lists/* \
     && \
@@ -26,10 +30,14 @@ RUN DEBIAN_FRONTEND=noninteractive apt update && \
 
 WORKDIR /
 
+ENV PIP_DEFAULT_TIMEOUT=100 \
+    PIP_RETRIES=10 \
+    PIP_DISABLE_PIP_VERSION_CHECK=1
+
 # Install Python dependencies
-RUN pip install --no-cache-dir certifi setuptools \
+RUN python3.7 -m pip install --no-cache-dir --upgrade pip setuptools wheel certifi \
     && \
-    pip --no-cache-dir install dlib==19.24.0\
+    python3.7 -m pip --no-cache-dir install dlib==19.24.0\
     imageio==2.9.0\
     imgaug==0.4.0\
     scipy==1.7.3\

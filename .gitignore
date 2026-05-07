@@ -1,0 +1,51 @@
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+env/
+.venv/
+.env
+
+# PyTorch / ML model files
+*.pth
+*.pt
+*.pth.tar
+*.pkl
+*.h5
+*.hdf5
+*.ckpt
+*.model
+
+# Weights, checkpoints and large binaries
+weights/
+logs/
+*.bin
+*.data
+*.npz
+
+# Dataset archives
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+
+# Jupyter
+.ipynb_checkpoints/
+
+# IDEs
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temp files
+tmp/
+temp/
+checkpoint
