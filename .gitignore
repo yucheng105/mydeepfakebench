@@ -52,3 +52,6 @@ Thumbs.db
 tmp/
 temp/
 checkpoint
+
+# datasets
+datasets/rgb/

@@ -1,8 +1,8 @@
 # log dir 
-log_dir: /mntcephfs/lab_data/tianshuoge/benchmark_results/logs_final/facexray_nt
+log_dir: ./logs/detector/facexray_nt
 
 # model setting
-pretrained: /home/zhiyuanyan/disfin/deepfake_benchmark/training/pretrained/xception-b5690688.pth   # path to a pre-trained model, if using one
+pretrained: ./training/pretrained/hrnetv2_w48_imagenet_pretrained.pth   # path to a pre-trained model, if using one
 model_name: facexray   # model name
 backbone_name: efficientnetb4  # backbone name
 
@@ -17,7 +17,7 @@ backbone_config:
 all_dataset: [FaceForensics++, FF-F2F, FF-DF, FF-FS, FF-NT, FaceShifter, DeepFakeDetection, Celeb-DF-v1, Celeb-DF-v2, DFDCP, DFDC, DeeperForensics-1.0, UADFV]
 train_dataset: [FF-NT]
 test_dataset: [FaceForensics++, FF-F2F, FF-DF, FF-FS, FF-NT]
-dataset_json_folder: '/home/zhiyuanyan/disfin/deepfake_benchmark/preprocessing/dataset_json'
+dataset_json_folder: ./preprocessing/dataset_json
 dataset_type: blend
 
 compression: c23  # compression-level for videos
