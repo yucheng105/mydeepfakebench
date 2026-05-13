@@ -34,6 +34,16 @@ python training/test.py --detector_path ./training/config/detector/ucf.yaml --te
 至 training/config/test_config.yaml 做修改。
 目前是用絕對路徑。
 
+# Eval: 輸出.csv
+```bash
+python training/eval.py \
+  --detector_path ./training/config/detector/ucf.yaml \
+  --weights_path ./training/weights/ucf_best.pth \
+  --detector_type ucf \
+  --metadata_csv ./evaluation/mini_eval_metadata.csv \
+  --output_csv ./evaluation/scores_ucf_v0.csv
+```
+
 # Training
 ```bash
 python training/train.py --detector_path ./training/config/detector/facexray.yaml --train_dataset "FaceForensics++" --test_dataset "FaceForensics++"

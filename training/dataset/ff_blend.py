@@ -56,6 +56,8 @@ class RandomDownScale(A.core.transforms_interface.ImageOnlyTransform):
 
 class FFBlendDataset(data.Dataset):
     def __init__(self, config=None):
+        self.config = config or {}
+        self.rgb_dir = self.config.get('rgb_dir', './datasets/rgb')
         # Check if the dictionary has already been created
         if os.path.exists('training/lib/nearest_face_info.pkl'):
             with open('training/lib/nearest_face_info.pkl', 'rb') as f:
@@ -138,24 +140,44 @@ class FFBlendDataset(data.Dataset):
         return imid_list
 
 
+    def resolve_frame_path(self, imid_path):
+        """
+        Resolve an image path stored in the landmark dictionary to the actual frame path.
+        """
+        frame_path = imid_path.replace('landmarks', 'frames').replace('npy', 'png')
+        if os.path.exists(frame_path):
+            return frame_path
+
+        normalized_path = frame_path.replace('\\', '/')
+        marker = '/FaceForensics++/'
+        if marker in normalized_path:
+            suffix_path = normalized_path.split(marker, 1)[1]
+            candidate_path = os.path.join(self.rgb_dir, 'FaceForensics++', suffix_path)
+            if os.path.exists(candidate_path):
+                return candidate_path
+
+        return frame_path
+
+
     def preprocess_images(self, imid_fg, imid_bg):
         """
         Load foreground and background images and face shapes.
         """
-        fg_im = cv2.imread(imid_fg.replace('landmarks', 'frames').replace('npy', 'png'))
+        fg_path = self.resolve_frame_path(imid_fg)
+        fg_im = cv2.imread(fg_path)
+        if fg_im is None:
+            raise FileNotFoundError(f'Failed to load foreground image: {fg_path} (from {imid_fg})')
         fg_im = np.array(self.data_aug(fg_im))
         fg_shape = self.landmark_dict[imid_fg]
         fg_shape = np.array(fg_shape, dtype=np.int32)
 
-        bg_im = cv2.imread(imid_bg.replace('landmarks', 'frames').replace('npy', 'png'))
+        bg_path = self.resolve_frame_path(imid_bg)
+        bg_im = cv2.imread(bg_path)
+        if bg_im is None:
+            raise FileNotFoundError(f'Failed to load background image: {bg_path} (from {imid_bg})')
         bg_im = np.array(self.data_aug(bg_im))
         bg_shape = self.landmark_dict[imid_bg]
         bg_shape = np.array(bg_shape, dtype=np.int32)
-
-        if fg_im is None:
-            return bg_im, bg_shape, bg_im, bg_shape
-        elif bg_im is None:
-            return fg_im, fg_shape, fg_im, fg_shape
         
         return fg_im, fg_shape, bg_im, bg_shape
 
