@@ -172,6 +172,7 @@ def main():
     # prepare the model (detector)
     model_class = DETECTOR[config['model_name']]
     model = model_class(config).to(device)
+    print(f"Current Model: {model.__class__.__name__}")
     epoch = 0
     if weights_path:
         try:
@@ -183,6 +184,7 @@ def main():
         print('===> Load checkpoint done!')
     else:
         print('Fail to load the pre-trained weights')
+    
     
     # start testing
     best_metric = test_epoch(model, test_data_loaders)

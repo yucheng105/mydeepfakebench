@@ -2,7 +2,7 @@
 log_dir: /mntcephfs/lab_data/zhiyuanyan/benchmark_results/logs_final/ucf_resnet
 
 # model setting
-pretrained: /home/zhiyuanyan/disfin/deepfake_benchmark/training/pretrained/xception-b5690688.pth   # path to a pre-trained model, if using one
+pretrained: ./training/pretrained/xception-b5690688.pth   # path to a pre-trained model, if using one
 # pretrained: '/home/zhiyuanyan/.cache/torch/hub/checkpoints/resnet34-b627a593.pth'   # path to a pre-trained model, if using one
 model_name: ucf   # model name
 backbone_name: xception  # backbone name
@@ -19,7 +19,7 @@ backbone_config:
 all_dataset: [FaceForensics++, FF-F2F, FF-DF, FF-FS, FF-NT, FaceShifter, DeepFakeDetection, Celeb-DF-v1, Celeb-DF-v2, DFDCP, DFDC, DeeperForensics-1.0, UADFV]
 train_dataset: [FF-F2F, FF-DF, FF-FS, FF-NT,]
 test_dataset: [FaceShifter, Celeb-DF-v1, DeeperForensics-1.0,]
-dataset_json_folder: '/home/zhiyuanyan/disfin/deepfake_benchmark/preprocessing/dataset_json'
+dataset_json_folder: './preprocessing/dataset_json'   # TODO:確定路徑是否為 training/preprocessing/dataset_json 或 preprocessing/dataset_json
 dataset_type: pair
 
 compression: c23  # compression-level for videos

@@ -25,7 +25,7 @@ docker exec -it deepfakebench-container /bin/bash
 # Testing
 ## Terminal 輸入
 ```bash
-python training/test.py --detector_path ./training/config/detector/xception.yaml --test_dataset "Celeb-DF-v2" --weights_path ./training/weights/xception_best.pth
+python training/test.py --detector_path ./training/config/detector/ucf.yaml --test_dataset "Celeb-DF-v2" --weights_path ./training/weights/ucf_best.pth
 ```
 可以換的地方：
 * Detector
