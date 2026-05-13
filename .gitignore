@@ -58,4 +58,4 @@ datasets/rgb/
 
 # Evaluation CSV outputs
 evaluation/metadata/*.csv
-evaluation/results/*.csv
+evaluation/results/*

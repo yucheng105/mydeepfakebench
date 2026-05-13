@@ -18,11 +18,30 @@ python evaluation/metadata/generate_celebdfv2_metadata.py
 
 ## 步驟 2：開始 Evaluate
 ### UCF
-- **Within Domain**：FaceForensics++
+#### Within Domain：
+- FaceForensics++
 ```bash
 python evaluation/run/run_ucf_inference.py
 ```
-- **Cross Domain**：CelebDF-V2
+#### Cross Domain：
+- CelebDF-V2
 ```bash
 python evaluation/run/run_ucf_inference.py celebdf-v2
+```
+- DFDC
+```bash
+python evaluation/run/run_ucf_inference.py dfdc
+```
+
+## 步驟 3：計算 AUC 看合不合理
+1. `evaluation/calculate_AUC.py` 中改檔名       // TODO: 要改成從外部輸入
+2. 執行
+```bash
+python evaluation/calculate_AUC.py
+```
+## 步驟 4：輸出 Threshold
+1. `evaluation/calculate_Threshold.py` 中改檔名
+2. 執行
+```bash
+python evaluation/calculate_Threshold.py
 ```
