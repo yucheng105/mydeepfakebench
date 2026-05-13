@@ -55,3 +55,7 @@ checkpoint
 
 # datasets
 datasets/rgb/
+
+# Evaluation CSV outputs
+evaluation/metadata/*.csv
+evaluation/results/*.csv

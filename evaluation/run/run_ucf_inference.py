@@ -32,10 +32,20 @@ RESULTS_DIR = os.path.join(EVAL_ROOT, 'results')
 
 # Support different datasets via command-line argument
 DATASET_MODE = sys.argv[1] if len(sys.argv) > 1 else 'mini'
-if DATASET_MODE == 'celebdfv2':
-    METADATA_CSV = os.path.join(METADATA_DIR, 'celebdfv2_metadata.csv')
-    OUTPUT_CSV = os.path.join(RESULTS_DIR, 'scores_visual_ucf_celebdfv2.csv')
+
+# mapping dataset mode -> (metadata filename, output csv name)
+METADATA_MAP = {
+    'mini': ('mini_eval_metadata.csv', 'scores_visual_ucf_v0.csv'),
+    'celebdfv2': ('celebdfv2_metadata.csv', 'scores_visual_ucf_celebdfv2.csv'),
+    'dfdc': ('dfdc_metadata.csv', 'scores_visual_ucf_dfdc.csv'),
+}
+
+if DATASET_MODE in METADATA_MAP:
+    meta_name, out_name = METADATA_MAP[DATASET_MODE]
+    METADATA_CSV = os.path.join(METADATA_DIR, meta_name)
+    OUTPUT_CSV = os.path.join(RESULTS_DIR, out_name)
 else:
+    print(f"Unknown dataset mode: {DATASET_MODE} — falling back to 'mini'.")
     METADATA_CSV = os.path.join(METADATA_DIR, 'mini_eval_metadata.csv')
     OUTPUT_CSV = os.path.join(RESULTS_DIR, 'scores_visual_ucf_v0.csv')
 
