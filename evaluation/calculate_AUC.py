@@ -6,7 +6,7 @@ y_true, y_score = [], []
 #################################
 # Enter File Name Here: CSV only
 #################################
-filename = "results/ucf/scores_visual_ucf_celebdfv2.csv"
+filename = "results/xception_fine_tuned/scores_visual_xception_ft_celebdf_v0.csv"
 
 with open(filename) as f:
     for row in csv.DictReader(f):

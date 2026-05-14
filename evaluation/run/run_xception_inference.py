@@ -36,7 +36,7 @@ DATASET_MODE = sys.argv[1] if len(sys.argv) > 1 else 'mini'
 
 # mapping dataset mode -> (metadata filename, output csv name)
 METADATA_MAP = {
-    'mini': ('mini_eval_metadata.csv', 'scores_visual_xception_v0.csv'),
+    'mini': ('faceforensics++_metadata.csv', 'scores_visual_xception_v0.csv'),
     'celebdfv2': ('celebdfv2_metadata.csv', 'scores_visual_xception_celebdfv2.csv'),
     'dfdc': ('dfdc_metadata.csv', 'scores_visual_xception_dfdc.csv'),
 }

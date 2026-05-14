@@ -2,7 +2,11 @@ import csv
 import numpy as np
 
 rows = []
-with open("results/ucf/scores_visual_ucf_ff++v0.csv") as f:
+
+# xception:results/xception_fine_tuned/scores_visual_xception_ft_v0.csv
+# ucf:results/ucf/scores_visual_ucf_v0.csv
+
+with open("results/xception_fine_tuned/scores_visual_xception_ft_v0.csv") as f:
     rows = [r for r in csv.DictReader(f) if r["status"] == "ok"]
 
 y_true = np.array([int(r["label"]) for r in rows])
@@ -16,7 +20,7 @@ for t in np.arange(0.1, 1.0, 0.1):
     far = np.mean(pred[y_true == 0])       # 真實影片被判成假的比例
     frr = np.mean(1 - pred[y_true == 1])   # 假的影片沒被抓到的比例
     sweep_rows.append({
-        "detector_name": "UCF",            # 換成你的 detector 名稱
+        "detector_name": "Xception",            # 換成你的 detector 名稱
         "threshold": round(t, 2),
         "far": round(float(far), 4),
         "frr": round(float(frr), 4),
@@ -25,7 +29,7 @@ for t in np.arange(0.1, 1.0, 0.1):
         "n_samples": n,
     })
 
-with open("threshold_sweep_ucf_v0.csv", "w", newline="") as f:
+with open("threshold_sweep_xception_ft_v0.csv", "w", newline="") as f:
     writer = csv.DictWriter(f, fieldnames=sweep_rows[0].keys())
     writer.writeheader()
     writer.writerows(sweep_rows)
